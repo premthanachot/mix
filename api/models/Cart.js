@@ -1,8 +1,8 @@
-const mogoose = require("mongoose");
+const mongoose = require("mongoose");
 
-const CartSchema = new mogoose.Schema(
+const CartSchema = new mongoose.Schema(
   {
-    userId: { type: String, required: true, unique: true },
+    userId: { type: String, required: true },
     products: [
         {
             productId: {
