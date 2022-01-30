@@ -7,8 +7,7 @@ const {
 
 const router = require("express").Router();
 
-//CREATE
-
+//create
 router.post("/", verifyToken, async (req, res) => {
   const newOrder = new Order(req.body);
 
@@ -20,7 +19,7 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-//UPDATE
+//update
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -36,7 +35,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//DELETE
+//delete
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
@@ -46,7 +45,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//GET USER ORDERS
+//get user orders
 router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId });
@@ -56,8 +55,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-// //GET ALL
-
+//get all
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
@@ -67,24 +65,15 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-// GET MONTHLY INCOME
-
+//get monthly income 
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
-  const productId = req.query.pid;
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
   const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
 
   try {
     const income = await Order.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: previousMonth },
-          ...(productId && {
-            products: { $elemMatch: { productId } },
-          }),
-        },
-      },
+      { $match: { createdAt: { $gte: previousMonth } } },
       {
         $project: {
           month: { $month: "$createdAt" },
