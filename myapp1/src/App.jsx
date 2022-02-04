@@ -11,15 +11,16 @@ import {
 } from "react-router-dom";
 
 const App = () => {
+    const user = false;
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/products/:category" element={<ProductList/>}/>
-                <Route path="/product/:id" element={<Product/>}/>
-                <Route path="/cart" element={<Cart/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
+                <Route path='/' element={<Home />} />
+                <Route path="/products/:category" element={<ProductList />} />
+                <Route path="/product/:id" element={<Product />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 {/* <Route path="/success" element={<success/>}/> */}
             </Routes>
         </Router>

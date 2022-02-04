@@ -1,7 +1,12 @@
 import { Add, Remove } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { useLocation } from "react-router-dom";
+import { pubilcRequest } from "../requestMethods";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div``;
 
@@ -45,14 +50,6 @@ const FilterTitle = styled.span`
   font-size: 20px;
   font-weight: 200;
 `
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
-`
 const FilterSize = styled.select`
   margin-left: 10px;
   padding: 5px;
@@ -91,37 +88,68 @@ const Button = styled.button`
   }
 `
 
-const Product = () => {
+const Product = ({ cat, filters, sort }) => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await pubilcRequest.get("/products/find/" + id)
+        setProduct(res.data);
+      } catch { }
+    };
+    getProduct()
+  }, [id])
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  }
+
+  const handleClick = () => {
+    dispatch(addProduct({
+      ...product, quantity, size
+    }));
+  }
+
   return (
     <Container>
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Burger</Title>
+          <Title>{product.Title}</Title>
           <Desc>
-            Pork, Bread, Tomato, Lettuce
+            {product.Desc}
           </Desc>
-          <Price>$ 20</Price>
+          <Price>$ {product.Price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => {
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                })}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
