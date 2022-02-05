@@ -50,7 +50,9 @@ const Navbar = () => {
                 {/* <Center>center</Center> */}
                 <Right>
                     <MenuItem>Register</MenuItem>
-                    <MenuItem>Login</MenuItem>
+                    <Link to="/login">
+                        <MenuItem>Login</MenuItem>
+                    </Link>
                     <Link to="/cart">
                         <MenuItem>
                             <Badge BadgeContent={quantity} color="primary"><ShoppingCartOutlined />
