@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import { useDispatch } from "react-redux";
+import { logout } from "../Redux/Action/userActions";
 
 const Header = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     $("[data-trigger]").on("click", function (e) {
       e.preventDefault();
@@ -21,6 +24,10 @@ const Header = () => {
       }
     });
   }, []);
+  
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
 
   return (
     <header className="main-header navbar">
@@ -53,7 +60,7 @@ const Header = () => {
           <i className="md-28 fas fa-bars"></i>
         </button>
         <ul className="nav">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className={`nav-link btn-icon `} title="Dark mode" to="#">
               <i className="fas fa-moon"></i>
             </Link>
@@ -67,7 +74,7 @@ const Header = () => {
             <Link className="nav-link" to="#">
               English
             </Link>
-          </li>
+          </li> */}
           <li className="dropdown nav-item">
             <Link className="dropdown-toggle" data-bs-toggle="dropdown" to="#">
               <img
@@ -83,7 +90,11 @@ const Header = () => {
               <Link className="dropdown-item" to="#">
                 Settings
               </Link>
-              <Link className="dropdown-item text-danger" to="#">
+              <Link
+                onClick={logoutHandler}
+                className="dropdown-item text-danger"
+                to="#"
+              >
                 Exit
               </Link>
             </div>

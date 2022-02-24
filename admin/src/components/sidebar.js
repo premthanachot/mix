@@ -44,7 +44,7 @@ const Sidebar = () => {
                 <span className="text">Products</span>
               </NavLink>
             </li>
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <NavLink
                 activeClassName="active"
                 className="menu-link"
@@ -53,8 +53,8 @@ const Sidebar = () => {
                 <i className="icon fas fa-cart-plus"></i>
                 <span className="text">Add product</span>
               </NavLink>
-            </li>
-            <li className="menu-item">
+            </li> */}
+            {/* <li className="menu-item">
               <NavLink
                 activeClassName="active"
                 className="menu-link"
@@ -63,7 +63,7 @@ const Sidebar = () => {
                 <i className="icon fas fa-list"></i>
                 <span className="text">Categories</span>
               </NavLink>
-            </li>
+            </li> */}
             <li className="menu-item">
               <NavLink
                 activeClassName="active"
@@ -84,7 +84,7 @@ const Sidebar = () => {
                 <span className="text">Users</span>
               </NavLink>
             </li>
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <NavLink
                 activeClassName="active"
                 className="menu-link disabled"
@@ -93,9 +93,9 @@ const Sidebar = () => {
                 <i className="icon fas fa-store-alt"></i>
                 <span className="text">Sellers</span>
               </NavLink>
-            </li>
+            </li> */}
 
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <NavLink
                 activeClassName="active"
                 className="menu-link disabled"
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 <i className="icon fas fa-usd-circle"></i>
                 <span className="text">Transactions</span>
               </NavLink>
-            </li>
+            </li> */}
           </ul>
           <br />
           <br />

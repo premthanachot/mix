@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "./../components/sidebar";
-import Header from "./../components/Header";
+import Sidebar from "../components/sidebar";
+import Header from "../components/Header";
 import OrderMain from "../components/orders/OrderMain";
 
 const OrderScreen = () => {

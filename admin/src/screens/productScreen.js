@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "./../components/sidebar";
-import Header from "./../components/Header";
-import MainProducts from "./../components/products/MainProducts";
+import Sidebar from "../components/sidebar";
+import Header from "../components/Header";
+import MainProducts from "../components/products/MainProducts";
 
 const ProductScreen = () => {
   return (

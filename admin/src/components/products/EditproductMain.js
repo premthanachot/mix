@@ -1,5 +1,5 @@
 import React from "react";
-import Toast from "./../LoadingError/Toast";
+import Toast from "../LoadingError/Toast";
 import { Link } from "react-router-dom";
 
 const EditProductMain = (props) => {
