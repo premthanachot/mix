@@ -49,10 +49,10 @@ const ShopSection = () => {
                               </Link>
                             </p>
 
-                            <Rating
+                            {/* <Rating
                               value={product.rating}
                               text={`${product.numReviews} reviews`}
-                            />
+                            /> */}
                             <h3>${product.price}</h3>
                           </div>
                         </div>

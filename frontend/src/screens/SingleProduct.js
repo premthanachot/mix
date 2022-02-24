@@ -59,13 +59,13 @@ const SingleProduct = ({ history, match }) => {
                         <span>unavailable</span>
                       )}
                     </div>
-                    <div className="flex-box d-flex justify-content-between align-items-center">
+                    {/* <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Reviews</h6>
                       <Rating
                         value={product.rating}
                         text={`${product.numReviews} reviews`}
                       />
-                    </div>
+                    </div> */}
                     {product.countInStock > 0 ? (
                       <>
                         <div className="flex-box d-flex justify-content-between align-items-center">
@@ -96,7 +96,7 @@ const SingleProduct = ({ history, match }) => {
               </div>
             </div>
 
-            <div className="row my-5">
+            {/* <div className="row my-5">
               <div className="col-md-6">
                 <h6 className="mb-3">REVIEWS</h6>
                 <Message variant={"alert-info mt-3"}>No Reviews</Message>
@@ -152,7 +152,7 @@ const SingleProduct = ({ history, match }) => {
                   </Message>
                 </div>
               </div>
-            </div>
+            </div> */}
           </>
         )}
       </div>
