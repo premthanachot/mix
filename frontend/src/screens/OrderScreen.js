@@ -9,15 +9,22 @@ import Message from "./../components/LoadingError/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
 import { ORDER_PAY_RESET } from "../Redux/Constants/OrderContants";
+import axios from "axios";
 
 const KEY =
   "pk_test_51KUu5eIjGf9tCaloktrOVSMUz6crVwvugDKDRRREYJU9mT29KOW9Nebk55ZYgsc4uakoghZe6RuWKoIblhWgJPLG008u8xNAOH";
 const OrderScreen = ({ match }) => {
   window.scrollTo(0, 0);
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+  const [stripeToke, setStripeToken] = useState(null);
   const orderId = match.params.id;
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -29,8 +36,25 @@ const OrderScreen = ({ match }) => {
   }
 
   useEffect(() => {
+    if(!order || successPay){
+      dispatch({type: ORDER_PAY_RESET})
+      dispatch(getOrderDetails(orderId))
+    }
+    const makeRequest = async () => {
+      try {
+        const res = await axios.get("/api/config/paypal", {
+          tokenId: stripeToke.id,
+          amount: 20000,
+        });
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    stripeToke && makeRequest();
     dispatch(getOrderDetails(orderId));
   }, [dispatch, orderId]);
+
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
@@ -194,12 +218,13 @@ const OrderScreen = ({ match }) => {
                 </table>
                 <div className="col-12">
                   <StripeCheckout
-                    name="Name"
+                    name={order.name}
                     image="https://avatars.githubusercontent.com/u/1486366?v=4"
                     billingAddress
                     shippingAddress
                     description={`Your total is $${order.totalPrice}`}
                     amount={order.totalPrice * 100}
+                    token={onToken}
                     stripeKey={KEY}
                   >
                     <button onSuccess={successPaymentHandler}>

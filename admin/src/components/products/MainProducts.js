@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Product from "./Product";
-import products from "../../data/Products";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../../Redux/Action/ProductActions";
+import Loading from "../LoadingError/Loading";
+import Message from "../LoadingError/Error";
 
 const MainProducts = () => {
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
+  const productDelete = useSelector((state) => state.productDelete);
+  const { error: errorDelete, success: successDelete } = productDelete;
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch, successDelete]);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -44,13 +55,19 @@ const MainProducts = () => {
         </header>
 
         <div className="card-body">
-          <div className="row">
-            {/* Products */}
-            {products.map((product) => (
-              <Product product={product} key={product._id} />
-            ))}
-          </div>
-
+          {errorDelete && (<Message variant="alert-danger">{error}</Message>)}
+          {loading ? (
+            <Loading />
+          ) : error ? (
+            <Message variant="alert-danger">{error}</Message>
+          ) : (
+            <div className="row">
+              {/* Products */}
+              {products.map((product) => (
+                <Product product={product} key={product._id} />
+              ))}
+            </div>
+          )}
           <nav className="float-end mt-4" aria-label="Page navigation">
             <ul className="pagination">
               <li className="page-item disabled">

@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import protect from "../Middleware/AuthMiddleware.js";
+import { protect } from "../Middleware/AuthMiddleware.js";
 import Order from "./../Models/OrderModel.js";
 
 const orderRouter = express.Router();
@@ -50,6 +50,17 @@ orderRouter.get(
 );
 
 orderRouter.get(
+  "/all",
+  protect,
+  asyncHandler(async (req, res) => {
+    const orders = await Order.find({})
+      .sort({ _id: -1 })
+      .populate("user", "id name email");
+    res.json(orders);
+  })
+);
+
+orderRouter.get(
   "/:id",
   protect,
   asyncHandler(async (req, res) => {
@@ -75,13 +86,32 @@ orderRouter.put(
 
     if (order) {
       order.isPaid = true;
-      order.paidAt = Date.now;
+      order.paidAt = Date.now();
       order.paymentResult = {
         id: req.body.id,
         status: req.body.status,
         update: req.body.update,
         email_address: req.body.email_address,
       };
+      const updateOrder = await order.save();
+      res.json(updateOrder);
+    } else {
+      res.status(404);
+      throw new Error("Order Not Found");
+    }
+  })
+);
+
+orderRouter.put(
+  "/:id/delivered",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+     
       const updateOrder = await order.save();
       res.json(updateOrder);
     } else {

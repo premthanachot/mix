@@ -34,7 +34,7 @@ const PaymentScreen = ({ history }) => {
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
-              <label className="form-check-label">PayPal or Credit Card</label>
+              <label className="form-check-label">Credit Card</label>
             </div>
           </div>
 
