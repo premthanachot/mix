@@ -35,7 +35,7 @@ const CartScreen = ({ match, location, history }) => {
           <div className=" alert alert-info text-center mt-3">
             Your cart is empty
             <Link
-              className="btn btn-success mx-5 px-5 py-3"
+              className="btn btn-dark mx-5 px-5 py-3"
               to="/"
               style={{
                 fontSize: "12px",

@@ -29,7 +29,7 @@ const ProfileScreen = () => {
               <div className="author-card-cover"></div>
               <div className="author-card-profile row">
                 <div className="author-card-avatar col-md-5">
-                  <img src="./images/user.png" alt="userprofileimage" />
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOZDXIMcKgVVJu7CyqaiGnzVqpmWG24iEyrA&usqp=CAU" alt="userprofileimage" />
                 </div>
                 <div className="author-card-details col-md-7">
                   <h5 className="author-card-name mb-2">

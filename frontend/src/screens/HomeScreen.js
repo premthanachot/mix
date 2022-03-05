@@ -11,8 +11,6 @@ const HomeScreen = () => {
     <div>
       <Header />
       <ShopSection />
-      <CalltoActionSection />
-      <ContactInfo />
       <Footer />
     </div>
   );
